@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+
+<properties version="1.0">
+
+	<!-- threshold values - RANDOM! -->
+	<entry key="TEMP_THRSHLD_LOW">21.30</entry>
+	<entry key="TEMP_THRSHLD_HIGH">21.50</entry>
+	
+	<!-- flags according to CORIOLIS flagging scheme -->
+	<entry key="FLAG_RANGE_PASS">1</entry> <!-- good data -->
+	<entry key="FLAG_RANGE_FAIL">4</entry> <!-- bad data -->
+	
+	<!-- file directories -->
+	<!-- files as received from instruments -->
+	<entry key="RAW_FILE_DIR">/home/abe/workspace/lightning/raw_xml</entry>
+	<!-- files cleaned from preceding/trailing garbage-->
+	<entry key="CLEAN_FILE_DIR">/home/abe/workspace/lightning/clean_xml</entry>
+	<!-- files annotated with QC flags -->
+	<entry key="ANNOTATED_FILE_DIR">/home/abe/workspace/lightning/annotated_xml</entry>
+	<!-- text files containing stripped data only -->
+	<entry key="STRIPPED_DATA_DIR">/home/abe/workspace/lightning/extracted_data</entry>
+	
+	
+	<!-- sensor UUID's -->
+	<entry key="CTD_UUID">291EC6DA-43F8-46D3-86F5-628FBF955261</entry>
+	<entry key="FLUOROMETER_UUID"></entry>
+	
+</properties>
