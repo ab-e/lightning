@@ -1,0 +1,68 @@
+ ObservationCollection als Container um die Observation in ein JSON Format zu parsen - die Sensorinformation ggf.  über den Identifier über eine andere Schnittstelle auslesen.
+ Aus der Collection die Observations für die Weiterverarbeitung herausnehmen (angereichert mit den für die QG notwendigen Sensorinformationen). Der (bis auf die Sensorinformationen) leere Container wandert ans Ende der Verarbeitungskette, wo damit die übermittelte Observation wieder zusammengesetzt (über die lineage-paramenter) und für das Ablegen in der DB, SOS o.ä. weitergegeben wird.
+ 
+ObservationCollection= {
+		"type": "ObservationsCollection",
+		"identifier": "identifier",
+		"time": "YYYY-MM-DDThh:mm:ss",
+    "timeZone": timezone,
+		"geometry": {
+				"type": "Point",
+				"coordinates": [lat, lng]
+			  }	  		
+		"properties": {
+				"observedProperty": observedProperty,
+				"orientation" : {},
+				...
+			  }	
+			  
+		"observations": [{
+			"identifier": "identifier",
+		"geometry": {
+				"type": "Point",
+				"coordinates": [lat, lng]
+			  },
+		"startTime": "YYYY-MM-DDThh:mm:ss",
+		"endTime": "YYYY-MM-DDThh:mm:ss",
+		"timeZone": timezone,
+		"observedValue": value
+		"uom": uom,
+		"quality": quality
+       }, 
+       {
+			"identifier": "identifier",
+		"geometry": {
+				"type": "Point",
+				"coordinates": [lat, lng]
+			  },
+		"startTime": "YYYY-MM-DDThh:mm:ss",
+		"endTime": "YYYY-MM-DDThh:mm:ss",
+		"timeZone": timezone,
+		"observedValue": value
+		"uom": uom,
+		"quality": quality
+       },
+      ...]
+}
+
+	      
+	   
+Observation= {
+	"type": "Observation",
+	"lineage":  {
+		"identifier": "identifier",
+		"parent": "parentidentifier",
+		"time": "YYYY-MM-DDThh:mm:ss"
+		},
+	"geometry": {
+				"type": "Point",
+				"coordinates": [lat, lng]
+			  },
+	"observedProperty": observedProperty,
+	"startTime": "YYYY-MM-DDThh:mm:ss",
+	"endTime": "YYYY-MM-DDThh:mm:ss",
+	"timeZone": timezone,
+	"observedValue": value
+	"uom": uom,
+	"quality": quality
+       }	 
