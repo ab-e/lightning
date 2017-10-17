@@ -1,0 +1,52 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "Observation",
+    "description": "An atomic observation used as input to and output from Storm applications for near real-time quality control",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The unique identifier for an observation (possibly a URI)",
+            "type": "string"
+        },
+        "madeBySensor": {
+            "description": "The unique identifier for the sensor that made the observation (possibly a URI)",
+            "type": "string"
+        },
+        "hasFeatureOfInterest": {
+	    "description": "The unique identifier for the feature of interest about which the observation was made (possibly a URI)",
+            "type": "string"
+        },
+	"observedProperty": {
+	    "description": "The unique identifier for the feature property about which the observation was made (possibly a URI)",
+            "type": "string"
+	},
+	"resultTime": {
+	    "description": "Instant of time when the observation was completed (ISO DateTime with time zone)",
+	    "type": "string"
+	},
+        "hasResult": {
+	    "description": "Value representing the value associated with the observed Property",
+	    "type": "object",
+	    "properties": {
+	        "id": {
+		    "description": "The unique identifier for a Result resource (possibly a URI)", 
+                    "type": "string"
+		},
+                "unit": {
+		    "description": "The unique identifier for the unit of the result (possibly a URI)",
+                    "type": "string"
+		},
+		"numericValue": {
+		    "description": "The simple value of the Result",
+		    "type": "number"
+		},
+		"required": ["numericValue"]
+            }
+	},
+	"qualityOfObservation": {
+	    "description": "Adjudged quality of the Result",
+	    "type": "string"
+	}
+    },
+    "required": ["madeBySensor", "hasFeatureOfInterest", "observedProperty", "resultTime", "hasResult"]
+}

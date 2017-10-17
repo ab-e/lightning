@@ -1,0 +1,14 @@
+{
+	"id": "http://example.org/observations/1",
+        "madeBySensor": "http://example.org/sensors/1",
+        "hasFeatureOfInterest": "http://example.org/features/1",
+	"observedProperty": "http://example.org/properties/1",
+	"resultTime": "2017-01-01T00:00:00.000+02:00",
+        "hasResult": {
+	    "id": "http://example.org/results/1",
+            "unit": "http://qudt.org/vocab/unit#DegreeCelsius",
+            "numericValue": 12.5
+	},
+	"qualityOfObservation": "1000"
+}
+

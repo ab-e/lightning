@@ -1,0 +1,10 @@
+{
+        "madeBySensor": "http://example.org/sensors/1",
+        "hasFeatureOfInterest": "http://example.org/features/1",
+	"observedProperty": "http://example.org/properties/1",
+	"resultTime": "2017-01-01T00:00:00.000+02:00",
+        "hasResult": {
+            "numericValue": 12.5
+	}
+}
+
