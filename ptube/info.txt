@@ -1,1 +1,20 @@
-This ia an info dummy text used to create the folder
+Here are some files to be used for another demo case:
+
+I have reactivated an older sensor which I built some years ago for testing purposes. 
+It basically is a arduino board reading data from a temperature,light and pressure sensor which I all stuffed in to a plastic tube. The sensor is delivering the data via arduinos serial interface (USB) as tab delimited text. I call the whole thing now 'ptube-sensor'
+
+The ptube sensor is attached to a Raspberry PI for which I wrote a script which reads the data from the serial interface and extracts pressure and temperature readings. Both, temperature and pressure data are packaged into sets of 100 data items per parameter and transformed into a T-SOS InsertResult XML for EACH parameter - thus the script generates two InsertResult XML strings.
+InsertResult XMLs are the sent via WLAN somewhere - later on to the EGI messaging service.
+
+I have provided a InsertResultTemplate for each parameter here in folder ptube/InsertResultTemplates and a SensorML XML for the whole sensor.
+
+Insertresulttemplate files are also at:
+
+http://dataportals.pangaea.de/sml/t-sos/pres_template.xml
+http://dataportals.pangaea.de/sml/t-sos/temp_template.xml
+
+these are the URI the InsertResult XML refers to
+
+The SensorML file can be found at:
+
+http://dataportals.pangaea.de/sml/db/ptube/ssw_59e9a8161cfb2.xml
