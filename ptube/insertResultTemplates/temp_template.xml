@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sos:InsertResultTemplate service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:om="http://www.opengis.net/om/2.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd">
+	<sos:proposedTemplate>
+		<!-- definition of result template-->
+		<sos:ResultTemplate>
+			<!--identifier of offering to which the observations shall be added -->
+			<sos:offering>P-Tube Demo Instrument</sos:offering>
+			<!--template containing the static observation elements which are the same for all results which are inserted-->
+			<sos:observationTemplate>
+				<om:OM_Observation gml:id="ptube_temp">
+					<om:phenomenonTime nilReason="template"/>
+					<om:resultTime nilReason="template"/>
+					<om:procedure xlink:href="http://dataportals.pangaea.de/sml/db/ptube/ssw_59e9a8161cfb2.xml"/>
+					<om:observedProperty xlink:href="http://purl.obolibrary.org/obo/PATO_0000146"/>
+					<om:featureOfInterest xlink:href="http://www.marum.de/cognium/0460"/>
+					<om:result/>
+				</om:OM_Observation>
+			</sos:observationTemplate>
+			<!--definition of result structure; result in this case is swe:DataRecord consisting of three elements: phenomenonTime, waterlevel and flowrate-->
+			<sos:resultStructure>
+				<swe:DataRecord>
+					<swe:field name="datetime">
+						<swe:Time definition="http://purl.obolibrary.org/obo/PATO_0000165">
+							<swe:uom code="ms"/>
+						</swe:Time>
+					</swe:field>
+					<swe:field name="temperature">
+						<swe:Quantity definition="http://purl.obolibrary.org/obo/PATO_0000146">
+							<swe:uom code="degC"/>
+						</swe:Quantity>
+					</swe:field>
+				</swe:DataRecord>
+			</sos:resultStructure>
+			<!--definition of result encoding; in this example, the results are encoded as text with the seperators defined in this element-->
+			<sos:resultEncoding>
+				<swe:TextEncoding tokenSeparator="#" blockSeparator="@@"/>
+			</sos:resultEncoding>
+		</sos:ResultTemplate>
+	</sos:proposedTemplate>
+</sos:InsertResultTemplate>
