@@ -1,0 +1,13 @@
+{
+  "messages": [
+  {
+    "attributes":
+    {
+      "madeBySensor":"http://example.org/sensors/1",
+      "hasFeatureOfInterest":"http://example.org/features/1",
+      "observedProperty":"http://example.org/properties/1"
+    },
+    "data":"ew0KCSJpZCI6ICJodHRwOi8vZXhhbXBsZS5vcmcvb2JzZXJ2YXRpb25zLzEiLA0KICAgICAgICAibWFkZUJ5U2Vuc29yIjogImh0dHA6Ly9leGFtcGxlLm9yZy9zZW5zb3JzLzEiLA0KICAgICAgICAiaGFzRmVhdHVyZU9mSW50ZXJlc3QiOiAiaHR0cDovL2V4YW1wbGUub3JnL2ZlYXR1cmVzLzEiLA0KCSJvYnNlcnZlZFByb3BlcnR5IjogImh0dHA6Ly9leGFtcGxlLm9yZy9wcm9wZXJ0aWVzLzEiLA0KCSJyZXN1bHRUaW1lIjogIjIwMTctMDEtMDFUMDA6MDA6MDAuMDAwKzAyOjAwIiwNCiAgICAgICAgImhhc1Jlc3VsdCI6IHsNCgkgICAgImlkIjogImh0dHA6Ly9leGFtcGxlLm9yZy9yZXN1bHRzLzEiLA0KICAgICAgICAgICAgInVuaXQiOiAiaHR0cDovL3F1ZHQub3JnL3ZvY2FiL3VuaXQjRGVncmVlQ2Vsc2l1cyIsDQogICAgICAgICAgICAibnVtZXJpY1ZhbHVlIjogMTIuNQ0KCX0NCn0NCg=="
+  }
+  ]
+}
