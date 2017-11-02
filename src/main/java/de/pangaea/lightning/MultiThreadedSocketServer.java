@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import de.pangaea.lightning.BasicExample.NumberSpout;
+import de.pangaea.lightning.MinMaxThresholdQualityCheck.MessageReader;
 import de.pangaea.lightning.inputprocessing.FileIO;
 
 

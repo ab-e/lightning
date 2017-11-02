@@ -8,8 +8,6 @@ feature_of_interest = 'http://vocab.nerc.ac.uk/collection/L04/current/L04001/'
 observed_property = 'http://vocab.nerc.ac.uk/collection/P02/current/TEMP/'
 envri_publisher01 = 'f50b7c315eefb3fe7fde05c00751be0115e685a6'
 
-url = 'https://messaging-devel.argo.grnet.gr/v1/projects/ENVRI/topics/envri_topic_101:publish?key={}'.format(envri_publisher01)
-
 with open(xml_file, 'r') as f:
     xml_file_data = f.read()
 
@@ -29,6 +27,8 @@ messages_array_json.append(message_json)
 
 data_json = {}
 data_json['messages'] = messages_array_json
+
+url = 'https://messaging-devel.argo.grnet.gr/v1/projects/ENVRI/topics/envri_topic_101:publish?key={}'.format(envri_publisher01)
 
 r = requests.post(url, data=json.dumps(data_json))
 

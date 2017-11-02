@@ -7,6 +7,7 @@ import sys
 
 raw_atomic_observations_dir = '../../../raw_atomic_observations'
 envri_consumer01 = '99e7201ccbb29630266fb9fb3911c20055ac5d6e'
+envri_publisher01 = 'f50b7c315eefb3fe7fde05c00751be0115e685a6'
 
 r = requests.post('https://messaging-devel.argo.grnet.gr/v1/projects/ENVRI/subscriptions/envri_sub_101:pull?key={}'.format(envri_consumer01), data='{"maxMessages": "1"}')
 
@@ -65,3 +66,28 @@ attributes_json['observedProperty'] = observed_property
 
 with open('{}/{}.json'.format(raw_atomic_observations_dir, result_time_iso), 'w') as f:
     json.dump(observation_json, f, indent=4)
+
+url = 'https://messaging-devel.argo.grnet.gr/v1/projects/ENVRI/topics/envri_topic_101:publish?key={}'.format(envri_publisher01)
+
+attributes_json = {}
+attributes_json['madeBySensor'] = sensor
+attributes_json['hasFeatureOfInterest'] = feature_of_interest
+attributes_json['observedProperty'] = observed_property
+
+message_data = base64.b64encode(bytes(json.dumps(observation_json), 'utf-8'))
+
+message_json = {}
+message_json['attributes'] = attributes_json
+message_json['data'] = message_data.decode('utf-8')
+
+messages_array_json = []
+messages_array_json.append(message_json)
+
+data_json = {}
+data_json['messages'] = messages_array_json
+
+url = 'https://messaging-devel.argo.grnet.gr/v1/projects/ENVRI/topics/envri_topic_101:publish?key={}'.format(envri_publisher01)
+
+r = requests.post(url, data=json.dumps(data_json))
+
+print('Request {} {}'.format(r.text, r.status_code))
