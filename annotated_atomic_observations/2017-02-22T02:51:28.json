@@ -1,9 +1,10 @@
 {
-    "observedProperty": "http://vocab.nerc.ac.uk/collection/P02/current/TEMP/",
-    "hasFeatureOfInterest": "http://vocab.nerc.ac.uk/collection/L04/current/L04001/",
+    "qualityOfObservation": "1",
     "madeBySensor": "291EC6DA-43F8-46D3-86F5-628FBF955261",
+    "observedProperty": "http://vocab.nerc.ac.uk/collection/P02/current/TEMP/",
+    "resultTime": "2017-02-22T02:51:28",
+    "hasFeatureOfInterest": "http://vocab.nerc.ac.uk/collection/L04/current/L04001/",
     "hasResult": {
         "numericValue": "21.4436000"
-    },
-    "resultTime": "2017-02-22T02:51:28"
+    }
 }
