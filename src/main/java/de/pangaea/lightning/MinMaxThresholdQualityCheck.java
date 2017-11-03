@@ -40,6 +40,8 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import de.pangaea.lightning.inputprocessing.DataParser;
@@ -104,6 +106,8 @@ public class MinMaxThresholdQualityCheck {
 	private static ArrayList<String> dataStringList = new ArrayList<>();
 
 	private static ObjectMapper mapper = new ObjectMapper();
+	private static JsonNodeFactory factory = JsonNodeFactory.instance;
+	private static HttpClient client = HttpClientBuilder.create().build();
 
 	public static class MessageReader extends BaseRichSpout {
 
@@ -132,9 +136,6 @@ public class MinMaxThresholdQualityCheck {
 		}
 
 		public void nextTuple() {
-
-			HttpClient client = HttpClientBuilder.create().build();
-
 			try {
 				HttpPost request = new HttpPost(
 						"https://messaging-devel.argo.grnet.gr/v1/projects/ENVRI/subscriptions/envri_sub_101:pull?key="
@@ -153,12 +154,29 @@ public class MinMaxThresholdQualityCheck {
 						JsonNode message = messages.next();
 						String ackId = message.get("ackId").asText();
 						JsonNode messageAttributes = message.get("message").get("attributes");
+						
+						String messageType = messageAttributes.get("type").asText();
+						
+						if (!messageType.equals("AtomicObservation"))
+							continue;
+						
 						String messageData = message.get("message").get("data").asText();
-//						byte[] bytes = messageData.getBytes("UTF-8");
-//						String messageDataEncoded = Base64.getEncoder().encodeToString(bytes);
 						String messageDataDecoded = new String(Base64.getDecoder().decode(messageData));
 						
 						_collector.emit(new Values(messageDataDecoded));
+						
+						ObjectNode ackIdsJson = factory.objectNode();
+						ArrayNode ackIdsArray = factory.arrayNode();
+						ackIdsJson.set("ackIds", ackIdsArray);
+						ackIdsArray.add(ackId);
+
+						request = new HttpPost(
+								"https://messaging-devel.argo.grnet.gr/v1/projects/ENVRI/subscriptions/envri_sub_101:acknowledge?key="
+										+ envriConsumer01);
+						postJsonData = new StringEntity(mapper.writeValueAsString(ackIdsJson));
+						request.setHeader("Content-type", "application/json");
+						request.setEntity(postJsonData);
+						client.execute(request);
 					}
 				}
 			} catch (Exception ex) {
@@ -266,9 +284,34 @@ public class MinMaxThresholdQualityCheck {
 				
 				((ObjectNode)observation).put("qualityOfObservation", rangeCheckResult);
 				
-				System.out.println(observation);
-				
 				// Translate observation into message and post it to EGI
+				String observedProperty = observation.get("observedProperty").asText();
+				String sensor = observation.get("madeBySensor").asText();
+				String feature = observation.get("hasFeatureOfInterest").asText();
+				byte[] bytes = mapper.writeValueAsString(observation).getBytes("UTF-8");
+				String messageDataEncoded = Base64.getEncoder().encodeToString(bytes);
+				
+				ObjectNode messagesJson = factory.objectNode();
+				ArrayNode messagesValue = factory.arrayNode();
+				messagesJson.set("messages", messagesValue);
+				ObjectNode messageJson = factory.objectNode();
+				messagesValue.add(messageJson);
+				ObjectNode attributesJson = factory.objectNode();
+				messageJson.set("attributes", attributesJson);
+				attributesJson.put("type", "AnnotatedAtomicObservation");
+				attributesJson.put("madeBySensor", sensor);
+				attributesJson.put("hasFeatureOfInterest", feature);
+				attributesJson.put("observedProperty", observedProperty);
+				messageJson.put("data", messageDataEncoded);
+	
+				HttpPost request = new HttpPost(
+						"https://messaging-devel.argo.grnet.gr/v1/projects/ENVRI/topics/envri_topic_101:publish?key="
+								+ envriPublisher01);
+				StringEntity postJsonData = new StringEntity(mapper.writeValueAsString(messagesJson));
+				request.setHeader("Content-type", "application/json");
+				request.setEntity(postJsonData);
+				HttpResponse response = client.execute(request);
+				response.getEntity().writeTo(System.out);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

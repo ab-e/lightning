@@ -17,6 +17,13 @@ if not messages_json['receivedMessages']:
     print('No messages')
     sys.exit()
 
+message_json = messages_json['receivedMessages'][0]['message']
+message_attributes_json = message_json['attributes']
+message_type = message_attributes_json['type']
+
+if message_type != 'InsertResult':
+    sys.exit()
+
 ack_id = messages_json['receivedMessages'][0]['ackId']
 
 ack_ids_json = {}
@@ -25,8 +32,6 @@ ack_ids_json['ackIds'].append(ack_id)
 
 r = requests.post('https://messaging-devel.argo.grnet.gr/v1/projects/ENVRI/subscriptions/envri_sub_101:acknowledge?key={}'.format(envri_consumer01), data=json.dumps(ack_ids_json))
 
-message_json = messages_json['receivedMessages'][0]['message']
-message_attributes_json = message_json['attributes']
 message_data = message_json['data']
 
 sensor = message_attributes_json['madeBySensor']
@@ -60,6 +65,7 @@ observation_json['hasResult'] = result_json
 observation_json_data = json.dumps(observation_json)
 
 attributes_json = {}
+attributes_json['type'] = 'AtomicObservation'
 attributes_json['madeBySensor'] = sensor
 attributes_json['hasFeatureOfInterest'] = feature_of_interest
 attributes_json['observedProperty'] = observed_property
@@ -68,11 +74,6 @@ with open('{}/{}.json'.format(raw_atomic_observations_dir, result_time_iso), 'w'
     json.dump(observation_json, f, indent=4)
 
 url = 'https://messaging-devel.argo.grnet.gr/v1/projects/ENVRI/topics/envri_topic_101:publish?key={}'.format(envri_publisher01)
-
-attributes_json = {}
-attributes_json['madeBySensor'] = sensor
-attributes_json['hasFeatureOfInterest'] = feature_of_interest
-attributes_json['observedProperty'] = observed_property
 
 message_data = base64.b64encode(bytes(json.dumps(observation_json), 'utf-8'))
 

@@ -12,6 +12,7 @@ with open(xml_file, 'r') as f:
     xml_file_data = f.read()
 
 attributes_json = {}
+attributes_json['type'] = 'InsertResult'
 attributes_json['madeBySensor'] = sensor
 attributes_json['hasFeatureOfInterest'] = feature_of_interest
 attributes_json['observedProperty'] = observed_property
