@@ -48,5 +48,5 @@
 	    "type": "string"
 	}
     },
-    "required": ["madeBySensor", "hasFeatureOfInterest", "observedProperty", "resultTime", "hasResult"]
+    "required": ["madeBySensor", "observedProperty", "resultTime", "hasResult"]
 }
